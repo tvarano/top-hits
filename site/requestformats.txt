@@ -1,0 +1,20 @@
+ 
+FLOW
+    1 first login
+    2 get-playlist
+        2a create-playlist if not found
+    3 get top tracks
+    4 populate playlist
+    5 done
+
+build request as you go
+
+    final request information
+        1 userid
+          token
+
+        2 playlist id
+
+        3 top track uris
+        
+        4 validation

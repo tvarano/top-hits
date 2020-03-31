@@ -1,0 +1,6 @@
+future implementation
+    nicer front end
+    store user profile
+        database just spotifyid-playlistid
+            literally just a dict
+        store keys, then they can name the playlist whatever they want

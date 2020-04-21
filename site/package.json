@@ -1,7 +1,7 @@
 {
   "name": "top-hits",
   "version": "1.0.0",
-  "description": "A Lastfm connector to Spotify.",
+  "description": "A Spotify tool to get your top tracks",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,10 +18,10 @@
   "homepage": "https://github.com/tvarano/top-hits#readme",
   "dependencies": {
     "cookie-parser": "^1.4.5",
-    "cors": "^2.8.4",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "querystring": "~0.2.0",
-    "request": "~2.83.0"
+    "request": "~2.88.2"
   }
 }

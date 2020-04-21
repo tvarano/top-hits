@@ -143,7 +143,7 @@ function getUserId(pack, nextOperations, res) {
     },
     (err, resp, body) => {
         if (!err && resp.statusCode === 200) {
-            pack.userId = JSON.parse(body).userId
+            pack.userId = JSON.parse(body).id
             console.log(`${pack.userId} HAS SUCCESSFULLY LOGGED IN\nUSING THE ${pack.term} OPTION`)
             nextOperations.pop()(pack, nextOperations, res)
         } else {
@@ -198,7 +198,7 @@ function createPlaylist(pack, nextOperations, res) {
         }, (err, resp, body) => {
         if (!err && (resp.statusCode === 200 || resp.statusCode === 201)) {
             pack.playlistId = body.id
-            pack.playlistUrl = `http://open.spotify.com/user/spotify/playlist/${p.id}`
+            pack.playlistUrl = `http://open.spotify.com/user/spotify/playlist/${body.id}`
             nextOperations.pop()(pack, nextOperations, res)
         } else {
             res.redirect('/error')
@@ -243,7 +243,6 @@ function populate(pack, nextOperations, res) {
         }
     }, (err, resp, body) => {
         if (!err && resp.statusCode === 201) {
-            console.log('body: '+body)
             nextOperations.pop()(pack, nextOperations, res)
         } else {
             res.redirect('/error')

@@ -33,10 +33,6 @@ const playlistInfo = {
 }
 
 const redirects = {
-    
-    // short_term: req.protocol + '://' + req.get('host') + req.originalUrl + 'callback/monthly',
-    // short_term: req.protocol + '://' + req.get('host') + req.originalUrl + 'callback/monthly'
-
     // short_term: 'http://localhost:5000/callback/monthly',
     // long_term: 'http://localhost:5000/callback/all-time'
     short_term: 'http://month-in-review.herokuapp.com/callback/monthly',
@@ -157,6 +153,7 @@ function getUserId(pack, nextOperations, res) {
                 if (err) return console.log('158' + err.message);
                 return row
                 ? () => {
+                    console.log(`user found: ${pack.userId}`)
                     // found a match, user is in database
                     // update last accessed in the db
                     let sql = `UPDATE users
@@ -191,6 +188,7 @@ function getPlaylist(pack, nextOperations, res, db) {
         if (row) {
             pack.playlistId = row.pl;
             pack.playlistUrl = `${playlist_url_prefix}/${row.pl}`
+            console.log(`${pack.userId} found playlist ${pack.playlistId}`)
         }
     });
     
@@ -209,6 +207,7 @@ function getPlaylist(pack, nextOperations, res, db) {
                     if (p.name == playlistInfo[pack.term].name) {
                         pack.playlistId = p.id
                         pack.playlistUrl = `${playlist_url_prefix}/${p.id}`
+                        console.log(`${pack.userId} found playlist ${pack.playlistId}`)
                     }
                 })
                 if (!pack.playlistId) {
@@ -255,7 +254,7 @@ function createPlaylist(pack, nextOperations, res, db) {
 
 function getTracks(pack, nextOperations, res, db) {
     request.get({
-        url: `https://api.spotify.com/v1/me/top/tracks?time_range=${pack.term}&limit=40`, 
+        url: `https://api.spotify.com/v1/me/top/tracks?time_range=${pack.term}&limit=30`, 
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -320,7 +319,7 @@ function createUser(pack, db) {
         if (err) {
         return console.log('313' + err.message);
       }
-      console.log(`created ${this.changes}`);}
+      console.log(`created ${pack.userId}`);}
     );
 }
 
@@ -332,7 +331,7 @@ function enterPlaylist(pack, db) {
                     WHERE userid = ?`
         db.run(sql, [pack.playlistId, pack.userId], (err) => {
             if (err) console.log('325' + err.message);
-            console.log(`Row updated: ${this.changes}`);
+            console.log(`${pack.userId}: playlist entered`);
         }) 
 }
 
